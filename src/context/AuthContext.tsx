@@ -50,6 +50,7 @@ interface AuthContextData {
     logout: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
+    isManager: boolean;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -186,6 +187,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 logout,
                 isAuthenticated: !!user,
                 isAdmin: user?.accessLevel === 3,
+                isManager: user?.accessLevel === 2,
             }}
         >
             {children}

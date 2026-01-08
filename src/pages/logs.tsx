@@ -10,7 +10,7 @@ import { useMutateExportLogs } from '../hooks/mutations/useMutateExportLogs';
 import { LogsFilters } from '../components/LogsFilters';
 import { LogsTable } from '../components/LogsTable';
 import { Pagination } from '../components/Pagination';
-import { ScrollText, Download } from 'lucide-react';
+import { ScrollText, Download, File, BarChart3 } from 'lucide-react';
 
 export default function Logs() {
     const { user, isAuthenticated, loading, isAdmin } = useAuth();
@@ -160,7 +160,7 @@ export default function Logs() {
                                             <p className="text-2xl font-bold text-gray-900">{currentPage} / {pagination.totalPages}</p>
                                         </div>
                                         <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                            <span className="text-xl">📄</span>
+                                            <File className="w-6 h-6 text-green-600" />
                                         </div>
                                     </div>
                                 </CardContent>
@@ -174,7 +174,7 @@ export default function Logs() {
                                             <p className="text-2xl font-bold text-gray-900">{logs.length}</p>
                                         </div>
                                         <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                                            <span className="text-xl">📊</span>
+                                            <BarChart3 className="w-6 h-6 text-purple-600" />
                                         </div>
                                     </div>
                                 </CardContent>

@@ -1,10 +1,9 @@
 import { useAuth } from '../context/AuthContext';
-import { Button } from '../components/Button';
-import { Card, CardContent, CardHeader } from '../components/Card';
+import { Card, CardContent } from '../components/Card';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { ThumbsUp, BadgeCheck, User, Lock } from 'lucide-react';
+import { Construction, BarChart3, PieChart, TrendingUp, Activity } from 'lucide-react';
 
 export default function Home() {
     const { user, isAuthenticated, loading, isAdmin } = useAuth();
@@ -34,92 +33,99 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Home - Casa Alves</title>
+                <title>Dashboard - Casa Alves</title>
             </Head>
 
-            {/* Main Content */}
-            {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Welcome Card */}
-                <Card className="mb-8">
-                    <CardContent className="py-8">
-                        <div className="text-center">
-                            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
-                                <ThumbsUp className="w-10 h-10 text-green-600" />
+            <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 py-8 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto">
+                    {/* Header */}
+                    <div className="mb-8">
+                        <div className="flex items-center space-x-3">
+                            <div className="flex items-center justify-center w-12 h-12 bg-green-100 rounded-full">
+                                <BarChart3 className="w-6 h-6 text-green-600" />
                             </div>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                                Olá, {user?.name}!
-                            </h2>
-                            <p className="text-gray-600 mb-6">
-                                Você está logado como {isAdmin ? 'administrador' : 'usuário comum'}
-                            </p>
-                            {isAdmin && (
-                                <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                                    <BadgeCheck className="w-4 h-4 mr-2" />
-                                    Acesso total ao sistema
-                                </div>
-                            )}
+                            <div>
+                                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+                                <p className="text-sm text-gray-500 mt-1">
+                                    Visão geral e estatísticas do sistema
+                                </p>
+                            </div>
                         </div>
-                    </CardContent>
-                </Card>
+                    </div>
 
-                {/* Info Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <Card>
-                        <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900">Dados da Conta</h3>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                            <div>
-                                <p className="text-sm text-gray-500">Nome</p>
-                                <p className="text-base font-medium text-gray-900">{user?.name}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">Login</p>
-                                <p className="text-base font-medium text-gray-900">{user?.login}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500">ID do Usuário</p>
-                                <p className="text-base font-medium text-gray-900">#{user?.id}</p>
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900">Nível de Acesso</h3>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                            <div>
-                                <p className="text-sm text-gray-500">Nível Atual</p>
-                                <p className="text-2xl font-bold text-green-600">{user?.accessLevel}</p>
-                            </div>
-                            <div className="pt-2">
-                                <div className="flex items-center space-x-2">
-                                    <div className={`h-2 w-2 rounded-full ${isAdmin ? 'bg-green-500' : 'bg-blue-500'}`}></div>
-                                    <span className="text-sm text-gray-600">
-                                        {isAdmin ? 'Privilégios Administrativos' : 'Usuário Padrão'}
-                                    </span>
+                    {/* Em Desenvolvimento Card */}
+                    <Card className="mb-8">
+                        <CardContent className="py-16">
+                            <div className="text-center max-w-2xl mx-auto">
+                                <div className="inline-flex items-center justify-center w-24 h-24 bg-orange-100 rounded-full mb-6">
+                                    <Construction className="w-12 h-12 text-orange-600" />
+                                </div>
+                                <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                                    Dashboard em Desenvolvimento
+                                </h2>
+                                <p className="text-lg text-gray-600 mb-6">
+                                    Estou trabalhando para trazer gráficos e estatísticas detalhadas sobre vendas, despesas e muito mais.
+                                </p>
+                                <div className="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+                                    Em breve disponível
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="md:col-span-2 lg:col-span-1">
-                        <CardHeader>
-                            <h3 className="text-lg font-semibold text-gray-900">Ações Rápidas</h3>
-                        </CardHeader>
-                        <CardContent className="space-y-3">
-                            <Button variant="secondary" className="w-full justify-start">
-                                <User className="w-5 h-5 mr-2" />
-                                Editar Perfil
-                            </Button>
-                            <Button variant="secondary" className="w-full justify-start">
-                                <Lock className="w-5 h-5 mr-2" />
-                                Alterar Senha
-                            </Button>
-                        </CardContent>
-                    </Card>
+                    {/* Preview Features Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <Card>
+                            <CardContent className="py-6">
+                                <div className="flex items-center space-x-4">
+                                    <div className="flex items-center justify-center w-14 h-14 bg-blue-100 rounded-lg">
+                                        <BarChart3 className="w-7 h-7 text-blue-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-semibold text-gray-900">Vendas</h3>
+                                        <p className="text-sm text-gray-500">Estatísticas de vendas</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 pt-4 border-t border-gray-100">
+                                    <span className="text-xs text-gray-400">Em desenvolvimento...</span>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <Card>
+                            <CardContent className="py-6">
+                                <div className="flex items-center space-x-4">
+                                    <div className="flex items-center justify-center w-14 h-14 bg-purple-100 rounded-lg">
+                                        <PieChart className="w-7 h-7 text-purple-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-semibold text-gray-900">Despesas</h3>
+                                        <p className="text-sm text-gray-500">Análise de despesas</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 pt-4 border-t border-gray-100">
+                                    <span className="text-xs text-gray-400">Em desenvolvimento...</span>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <Card>
+                            <CardContent className="py-6">
+                                <div className="flex items-center space-x-4">
+                                    <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-lg">
+                                        <TrendingUp className="w-7 h-7 text-green-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-semibold text-gray-900">Tendências</h3>
+                                        <p className="text-sm text-gray-500">Análise de crescimento</p>
+                                    </div>
+                                </div>
+                                <div className="mt-4 pt-4 border-t border-gray-100">
+                                    <span className="text-xs text-gray-400">Em desenvolvimento...</span>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
         </>

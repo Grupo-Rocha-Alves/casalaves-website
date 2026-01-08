@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Home, Menu, X, User, Lock, LogOut } from 'lucide-react';
+import { getAccessLevelLabel } from '../utils/accessLevel';
 
 export function Navbar() {
     const { user, logout, isAdmin } = useAuth();
@@ -14,6 +15,7 @@ export function Navbar() {
         { name: 'Home', href: '/home' },
         { name: 'Vendas', href: '/vendas' },
         { name: 'Despesas', href: '/despesas' },
+        { name: 'Duplicatas', href: '/duplicatas' },
         ...(isAdmin ? [{ name: 'Usuários', href: '/usuarios' }, { name: 'Logs', href: '/logs' }] : []),
     ];
 
@@ -50,7 +52,7 @@ export function Navbar() {
                         <div className="hidden md:flex items-center space-x-3">
                             <div className="text-right">
                                 <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                                <p className="text-xs text-gray-500">{isAdmin ? 'Administrador' : 'Usuário'}</p>
+                                <p className="text-xs text-gray-500">{user?.accessLevel ? getAccessLevelLabel(user.accessLevel) : 'Usuário'}</p>
                             </div>
                             
                             <div className="relative">

@@ -1,4 +1,4 @@
-import { Clock, User, FileText, Loader2, ScrollText } from 'lucide-react';
+import { Clock, User, FileText, Loader2, ScrollText, LogIn, UserPlus, Edit, Trash2, Key, ClipboardList } from 'lucide-react';
 
 interface Log {
     idLog: number;
@@ -15,14 +15,17 @@ interface LogsTableProps {
 
 export function LogsTable({ logs, loading }: LogsTableProps) {
     const formatDateTime = (dateTime: string) => {
-        return new Date(dateTime).toLocaleString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        });
+        // Formato: 2026-01-07 23:06:47+00
+        // Remove o timezone (+00) se existir
+        const cleanDateTime = dateTime.split('+')[0].trim();
+        
+        // Separa data e hora
+        const [datePart, timePart] = cleanDateTime.split(' ');
+        const [year, month, day] = datePart.split('-');
+        const [hours, minutes, seconds] = timePart.split(':');
+        
+        // Retorna no formato dd/mm/yyyy, hh:mm:ss
+        return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
     };
 
     const getActionColor = (acao: string) => {
@@ -37,12 +40,13 @@ export function LogsTable({ logs, loading }: LogsTableProps) {
 
     const getActionIcon = (acao: string) => {
         const acaoLower = acao.toLowerCase();
-        if (acaoLower.includes('login')) return '🔐';
-        if (acaoLower.includes('cadastro')) return '➕';
-        if (acaoLower.includes('atualização') || acaoLower.includes('atualizacao')) return '✏️';
-        if (acaoLower.includes('exclusão') || acaoLower.includes('exclusao')) return '🗑️';
-        if (acaoLower.includes('senha')) return '🔑';
-        return '📋';
+        const iconClass = "w-4 h-4";
+        if (acaoLower.includes('login')) return <LogIn className={iconClass} />;
+        if (acaoLower.includes('cadastro')) return <UserPlus className={iconClass} />;
+        if (acaoLower.includes('atualização') || acaoLower.includes('atualizacao')) return <Edit className={iconClass} />;
+        if (acaoLower.includes('exclusão') || acaoLower.includes('exclusao')) return <Trash2 className={iconClass} />;
+        if (acaoLower.includes('senha')) return <Key className={iconClass} />;
+        return <ClipboardList className={iconClass} />;
     };
 
     if (loading) {
@@ -70,8 +74,8 @@ export function LogsTable({ logs, loading }: LogsTableProps) {
                     <div key={log.idLog} className="bg-white border border-gray-200 rounded-lg p-3 space-y-2.5">
                         <div className="flex items-center justify-between">
                             <span className="text-xs font-mono text-gray-500">#{log.idLog}</span>
-                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getActionColor(log.acao)}`}>
-                                <span className="mr-1">{getActionIcon(log.acao)}</span>
+                            <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${getActionColor(log.acao)}`}>
+                                {getActionIcon(log.acao)}
                                 {log.acao}
                             </span>
                         </div>
@@ -146,8 +150,8 @@ export function LogsTable({ logs, loading }: LogsTableProps) {
                                 </td>
                                 <td className="px-6 py-4">
                                     <div className="flex items-center space-x-2">
-                                        <span className="text-lg">{getActionIcon(log.acao)}</span>
-                                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getActionColor(log.acao)}`}>
+                                        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${getActionColor(log.acao)}`}>
+                                            {getActionIcon(log.acao)}
                                             {log.acao}
                                         </span>
                                     </div>
