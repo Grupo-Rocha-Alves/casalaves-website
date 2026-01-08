@@ -33,7 +33,7 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Dashboard - Casa Alves</title>
+                <title>Home - Casa Alves</title>
             </Head>
 
             <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 py-8 px-4 sm:px-6 lg:px-8">

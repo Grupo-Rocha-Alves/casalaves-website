@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import { AuthProvider } from '../context/AuthContext';
 import { Layout } from '../components/Layout';
 import { Toaster } from 'react-hot-toast';
@@ -8,13 +9,15 @@ import '../styles/global.css';
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     
-    // Páginas que não devem ter navbar e footer
     const noLayoutPages = ['/login', '/'];
 
     const shouldUseLayout = !noLayoutPages.includes(router.pathname);
 
     return (
         <AuthProvider>
+            <Head>
+                <link rel="icon" href="/house.svg" type="image/svg+xml" />
+            </Head>
             {shouldUseLayout ? (
                 <Layout>
                     <Component {...pageProps} />
