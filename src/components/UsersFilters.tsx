@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { Button } from './Button';
 
 interface UsersFiltersProps {
@@ -7,6 +7,7 @@ interface UsersFiltersProps {
     onSearchChange: (value: string) => void;
     onFilterChange: (value: number | undefined) => void;
     onSearch: () => void;
+    onClearFilters: () => void;
 }
 
 export function UsersFilters({
@@ -15,6 +16,7 @@ export function UsersFilters({
     onSearchChange,
     onFilterChange,
     onSearch,
+    onClearFilters,
 }: UsersFiltersProps) {
     return (
         <div className="flex flex-col md:flex-row gap-4">
@@ -46,6 +48,10 @@ export function UsersFilters({
             <Button onClick={onSearch} variant="secondary">
                 <Search className="w-4 h-4 mr-2" />
                 Buscar
+            </Button>
+            <Button onClick={onClearFilters} variant="secondary">
+                <X className="w-4 h-4 mr-2" />
+                Limpar Filtros
             </Button>
         </div>
     );

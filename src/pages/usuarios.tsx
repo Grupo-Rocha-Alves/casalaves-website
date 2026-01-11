@@ -13,7 +13,7 @@ import { UsersTable } from '../components/UsersTable';
 import { Pagination } from '../components/Pagination';
 import { UserModal } from '../components/UserModal';
 import { DeleteConfirmModal } from '../components/DeleteConfirmModal';
-import { Users, Plus } from 'lucide-react';
+import { Users, Plus, File, BarChart3 } from 'lucide-react';
 
 interface UserFormData {
     nome: string;
@@ -38,7 +38,7 @@ export default function Usuarios() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
     const [currentUser, setCurrentUser] = useState<UserModalData | null>(null);
-    
+
     // Estados do modal de confirmação de exclusão
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [userToDelete, setUserToDelete] = useState<{ idUsuario: number; nome: string } | null>(null);
@@ -87,6 +87,15 @@ export default function Usuarios() {
     const handleSearch = () => {
         setCurrentPage(1);
         loadUsers();
+    };
+
+    const handleClearFilters = () => {
+        setSearchNome('');
+        setFilterNivelAcesso(undefined);
+        setCurrentPage(1);
+        setTimeout(() => {
+            getAllUsers({ page: 1, limit: 10 });
+        }, 100);
     };
 
     const handleOpenCreateModal = () => {
@@ -251,7 +260,7 @@ export default function Usuarios() {
                                     </p>
                                 </div>
                             </div>
-                            <Button 
+                            <Button
                                 onClick={handleOpenCreateModal}
                                 className="w-full sm:w-auto"
                             >
@@ -260,6 +269,53 @@ export default function Usuarios() {
                             </Button>
                         </div>
                     </div>
+
+                    {/* Estatísticas */}
+                    {users.length > 0 && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <Card>
+                                <CardContent className="py-4">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-sm text-gray-500">Total de Usuários</p>
+                                            <p className="text-2xl font-bold text-gray-900">{pagination.total}</p>
+                                        </div>
+                                        <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <Users className="w-6 h-6 text-blue-600" />
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardContent className="py-4">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-sm text-gray-500">Página Atual</p>
+                                            <p className="text-2xl font-bold text-gray-900">{currentPage} / {pagination.totalPages}</p>
+                                        </div>
+                                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                            <File className="w-6 h-6 text-green-600" />
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardContent className="py-4">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-sm text-gray-500">Usuários na Página</p>
+                                            <p className="text-2xl font-bold text-gray-900">{users.length}</p>
+                                        </div>
+                                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <BarChart3 className="w-6 h-6 text-purple-600" />
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    )}
 
                     {/* Filtros */}
                     <Card className="mb-6">
@@ -270,6 +326,7 @@ export default function Usuarios() {
                                 onSearchChange={setSearchNome}
                                 onFilterChange={setFilterNivelAcesso}
                                 onSearch={handleSearch}
+                                onClearFilters={handleClearFilters}
                             />
                         </CardContent>
                     </Card>
